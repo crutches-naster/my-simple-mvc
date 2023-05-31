@@ -1,0 +1,26 @@
+{
+    "name": "shalnev/mvc",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "crutches-naster",
+            "email": "crutches.master@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Core\\" : "core/",
+            "Config\\" : "config/",
+            "App\\" : "app/"
+        },
+        "files": [
+            "config/helpers.php"
+        ]
+    },
+    "require": {
+        "larapack/dd": "^1.1",
+        "vlucas/phpdotenv": "^5.5",
+        "ext-pdo": "*"
+    }
+}
