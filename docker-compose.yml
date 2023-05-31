@@ -17,8 +17,6 @@ services:
       - .:/var/www/html
     ports:
       - "8081:80"
-    command:
-      - composer install -d /var/www/html
     networks:
       - my_php_network
   db:
