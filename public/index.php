@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Note;
 use App\Models\User;
 use Core\DB;
 
@@ -18,12 +19,17 @@ try {
     $dotenv = Dotenv\Dotenv::createUnsafeImmutable(BASE_DIR);
     $dotenv->load();
 
-    $connection = DB::connect();
+    $notes = Note::select()->whereNotNull('folder_id');
+    d($notes->get());
 
-    //dd($connection);
+    $notes = Note::select()->where('author_id', '=', 1)->orWhereNull('folder_id');
+    d($notes->get());
 
-    dd(User::findBy('password', 123456));
-
+    d(Note::create([
+        'author_id' => rand(1,10),
+        'folder_id' => rand(0, 15),
+        'content' => 'created test'
+    ]));
 
 }
 catch (PDOException $exception) {

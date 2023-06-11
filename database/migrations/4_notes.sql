@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS notes(
         id BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         author_id INT UNSIGNED NOT NULL,
-        folder_id BIGINT UNSIGNED NOT NULL,
+        folder_id BIGINT UNSIGNED default NULL,
         content TEXT,
         pinned BOOL DEFAULT false,
         completed BOOL DEFAULT false,
