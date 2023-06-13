@@ -1,35 +1,45 @@
 <?php
 
-
+use App\Controllers\AuthController;
 use App\Models\Note;
 use App\Models\User;
 use Core\DB;
+use Core\Enums\HttpMethodsEnum;
+use Core\Router;
 
 require_once dirname(__DIR__) . '/config/constants.php';
 require_once BASE_DIR . "/vendor/autoload.php";
-
-//ToDo add router functionality
-
 
 try {
     if (!session_id()) {
         session_start();
     }
 
-    $dotenv = Dotenv\Dotenv::createUnsafeImmutable(BASE_DIR);
+    $dotenv = Dotenv\Dotenv::createUnsafeImmutable(BASE_DIR );
     $dotenv->load();
 
-    $notes = Note::select()->whereNotNull('folder_id');
-    d($notes->get());
+    Router::add(
+        'register',
+        [
+            'controller' => AuthController::class,
+            'action' => 'register',
+            'method' => 'GET'
+        ]
+    );
 
-    $notes = Note::select()->where('author_id', '=', 1)->orWhereNull('folder_id');
-    d($notes->get());
+    Router::add(
+        'login',
+        [
+            'controller' => AuthController::class,
+            'action' => 'login',
+            'method' => 'GET'
+        ]
+    );
 
-    d(Note::create([
-        'author_id' => rand(1,10),
-        'folder_id' => rand(0, 15),
-        'content' => 'created test'
-    ]));
+
+    if (!preg_match('/assets/i', $_SERVER['REQUEST_URI'])) {
+        Router::dispatch($_SERVER['REQUEST_URI']);
+    }
 
 }
 catch (PDOException $exception) {

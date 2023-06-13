@@ -15,7 +15,8 @@
             "App\\" : "app/"
         },
         "files": [
-            "config/helpers.php"
+            "config/helpers.php",
+            "routes/web.php"
         ]
     },
     "require": {
