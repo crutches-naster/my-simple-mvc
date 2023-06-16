@@ -45,7 +45,7 @@ trait Queryable
 
     static public function findBy(string $column, $value): static|false
     {
-        $query = Db::connect()->prepare("SELECT * FROM " . static::$tableName . " WHERE {$column} = :{$value}");
+        $query = Db::connect()->prepare("SELECT * FROM " . static::$tableName . " WHERE {$column} = :{$column}");
         $query->bindParam($column, $value);
         $query->execute();
 

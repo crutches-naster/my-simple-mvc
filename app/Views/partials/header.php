@@ -10,3 +10,6 @@
         <link href="<?= ASSETS_URI ?>css/styles.css" rel="stylesheet">
     </head>
     <body>
+<?php
+view('navs/main');
+?>

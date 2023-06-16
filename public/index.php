@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\Controllers\FoldersController;
 use App\Models\Note;
 use App\Models\User;
 use Core\DB;
@@ -18,6 +19,11 @@ try {
     $dotenv = Dotenv\Dotenv::createUnsafeImmutable(BASE_DIR );
     $dotenv->load();
 
+    /**
+     * ROUTER SECTION
+     * ToDo move routes to routes/web.php
+     */
+
     Router::add(
         'register',
         [
@@ -32,6 +38,42 @@ try {
         [
             'controller' => AuthController::class,
             'action' => 'login',
+            'method' => 'GET'
+        ]
+    );
+
+    Router::add(
+        'auth/signup',
+        [
+            'controller' => AuthController::class,
+            'action' => 'signup',
+            'method' => 'POST'
+        ]
+    );
+
+    Router::add(
+        'auth/signin',
+        [
+            'controller' => AuthController::class,
+            'action' => 'signin',
+            'method' => 'POST'
+        ]
+    );
+
+    Router::add(
+        'auth/signout',
+        [
+            'controller' => AuthController::class,
+            'action' => 'signout',
+            'method' => 'POST'
+        ]
+    );
+
+    Router::add(
+        'dashboard',
+        [
+            'controller' => FoldersController::class,
+            'action' => 'index',
             'method' => 'GET'
         ]
     );
