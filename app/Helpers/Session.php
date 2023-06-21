@@ -37,4 +37,14 @@ class Session
 
         return false;
     }
+
+    static public function notify(string $type, string $message)
+    {
+        $_SESSION['notify'] = compact('type', 'message');
+    }
+
+    static public function flushNotify()
+    {
+        unset($_SESSION['notify']);
+    }
 }

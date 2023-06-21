@@ -140,7 +140,7 @@ trait Queryable
 
         $this->commands[] = 'order';
 
-        static::$query .= " ORDER BY {$column} " . $orderBy ;
+        static::$query .= " ORDER BY {$column} " . $orderBy->value ;
 
         return $this;
     }
@@ -189,11 +189,11 @@ trait Queryable
     }
 
 
-    public function destroy(): bool
+    public static function destroy($id): bool
     {
         $query = "DELETE FROM " . static::$tableName . " WHERE id=:id";
         $query = Db::connect()->prepare($query);
-        $query->bindParam('id', $this->id);
+        $query->bindParam('id', $id);
 
         return $query->execute();
     }

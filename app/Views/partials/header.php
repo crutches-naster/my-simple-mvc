@@ -7,9 +7,12 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title><?= $pageTitle ?? 'Our Site' ?></title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="<?= ASSETS_URI ?>css/ui.css" rel="stylesheet">
         <link href="<?= ASSETS_URI ?>css/styles.css" rel="stylesheet">
     </head>
     <body>
 <?php
 view('navs/main');
+notify();
 ?>

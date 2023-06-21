@@ -17,18 +17,15 @@ class Validator
         return empty($this->errors);
     }
 
-    public function hasErrors() : bool
-    {
-        return count($this->errors) > 0;
-    }
-
     public function getErrors(): array
     {
         return $this->errors;
     }
 
-    public function setError(string $key, string $message)
+    public function setError(string $key, string $message) : void
     {
         $this->errors[$key] = $message;
     }
+
+
 }
