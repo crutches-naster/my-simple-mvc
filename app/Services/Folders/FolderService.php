@@ -4,6 +4,7 @@ namespace App\Services\Folders;
 
 use App\Helpers\Session;
 use App\Models\Folder;
+use Core\Enums\SqlOrderByEnum;
 
 class FolderService
 {
@@ -14,10 +15,6 @@ class FolderService
 
     public static function getUserFolders($userId, $generalFolderId = Folder::GENERAL_FOLDER_ID ): array
     {
-        return Folder::select()
-            ->where('user_id', '=', $userId )
-            ->orWhere('id', '=', $generalFolderId )
-            ->orderBy('id')
-            ->get();
+        return Folder::getUserFoldersWithShared();
     }
 }

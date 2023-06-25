@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Helpers\Session;
 use App\Models\Folder;
 use App\Models\Note;
+use App\Models\SharedNote;
 use App\Models\User;
 use App\Services\Folders\FolderService;
 use App\Services\Notes\NoteService;
@@ -36,21 +37,47 @@ class NotesController extends Controller
         }
 
         view('notes/create', $this->getErrors($fields, $validator));
-
     }
 
     public function edit(int $id)
     {
-        //ToDo implement
+        $users = User::select()->where('id', '!=', Session::id())->get();
+        $folders = FolderService::getUserFolders($id);
+        $sharedUsers = SharedNote::select(['user_id'])->where('note_id', '=', $id)->pluck('user_id');
+        $note = Note::find($id);
+
+        view('notes/edit', compact('users', 'folders', 'note', 'sharedUsers'));
     }
 
     public function update(int $id)
     {
-        //ToDo implement
+        $fields = filter_input_array(INPUT_POST, NotesValidator::REQUEST_RULES, false);
+        $validator = new NotesValidator();
+        $note = Note::find($id);
+
+        if ( NoteService::update($validator, $note, $fields)) {
+            Session::notify('success', 'Note was updated!');
+            redirect("folders/{$fields['folder_id']}");
+        }
+
+        view('notes/edit', $this->getErrors($fields, $validator));
     }
 
     public function destroy(int $id)
     {
+        //ToDo move to Repo )
+        $removingShares = SharedNote::select()
+            ->where('note_id', '=', $id)
+            ->get();
+
+        if(!empty($removingShares))
+        {
+            foreach ($removingShares as $removingShare )
+            {
+                $removingShare->remove();
+            }
+        }
+
         Note::destroy($id);
         Session::notify('success', 'Note was deleted');
 

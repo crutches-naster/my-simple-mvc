@@ -14,18 +14,20 @@ class FoldersController extends Controller
 {
     public function index()
     {
+        $activeFolder = Folder::GENERAL_FOLDER_ID;
+
         $notes = NoteService::getByFolderId(Folder::GENERAL_FOLDER_ID);
         $folders = FolderService::getUserFolders( Session::id() );
-        $activeFolder = Folder::GENERAL_FOLDER_ID;
 
         view('pages/dashboard', compact('notes', 'folders', 'activeFolder'));
     }
 
     public function show( int $id )
     {
+        $activeFolder = $id;
+
         $notes = NoteService::getByFolderId( $id );
         $folders = FolderService::getUserFolders( Session::id() );
-        $activeFolder = $id;
 
         view('pages/dashboard', compact('notes', 'folders', 'activeFolder'));
     }
@@ -80,8 +82,6 @@ class FoldersController extends Controller
         Folder::destroy($id);
 
         Session::notify('success', 'Folder was deleted');
-
-        //ToDo move existing in deleting folder notes to GENERAL folder
 
         redirect('dashboard');
     }

@@ -17,10 +17,25 @@
                         <input type="text" name="title" class="form-control" id="title" placeholder="Put some title">
                     </div>
                     <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="pinned" name="pinned" value="1">
+                            <label class="form-check-label" for="pinned">Pin note</label>
+                        </div>
+                    </div>
+                    <div class="mb-3">
                         <label for="folders" class="form-label">Folder</label>
                         <select name="folder_id" class="form-control" id="folders">
                             <?php foreach($folders as $folder): ?>
                                 <option value="<?= $folder->id ?>"><?= $folder->title ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="users" class="form-label">Share note with users</label>
+                        <select name="users[]" id="users" class="form-control" multiple>
+                            <option value="none"> - </option>
+                            <?php foreach($users as $user): ?>
+                                <option value="<?= $user->id ?>"><?= $user->email ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
